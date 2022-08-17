@@ -33,6 +33,13 @@ public class Book {
         setMaxLoanDays(20);
     }
 
+    public Book(String title, int maxLoanDays, BigDecimal finePerDay, String description) {
+        this.title = title;
+        this.maxLoanDays = maxLoanDays;
+        this.finePerDay = finePerDay;
+        this.description = description;
+    }
+
     public Book(String title, boolean available, boolean reserved, int maxLoanDays, BigDecimal finePerDay, String description) {
         this();
         setTitle(title);
