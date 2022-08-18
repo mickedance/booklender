@@ -16,7 +16,7 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false, nullable = false, unique = true)
     int bookId;
-    @Column(nullable = false)
+    @Column(nullable = false, updatable = false)
     private String title;
     @Column(nullable = false)
     boolean available = true;
