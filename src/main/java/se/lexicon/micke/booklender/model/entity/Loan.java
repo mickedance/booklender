@@ -56,7 +56,8 @@ public class Loan {
 
     public void setBook(Book book) {
         if(book==null) throw new IllegalArgumentException("book was null");
-        this.book = book;
+        if(book.isAvailable())
+            this.book = book;
     }
 
     public LocalDate getLoanDate() {
