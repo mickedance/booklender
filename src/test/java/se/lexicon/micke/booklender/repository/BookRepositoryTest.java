@@ -6,6 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import se.lexicon.micke.booklender.model.entity.Book;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -45,7 +46,7 @@ public class BookRepositoryTest {
         Book book = getbook();
         book.setTitle("a newer title for this book");
         Book savedBook = bookRepository.save(book);
-        savedBook.setTitle("this is an updated title");
+
         savedBook.setAvailable(false);
         savedBook.setDescription("som desc");
         savedBook.setMaxLoanDays(220);
@@ -66,5 +67,18 @@ public class BookRepositoryTest {
     @Order(5)
     void findAll(){
         Assertions.assertEquals(3, bookRepository.findAll().size());
+    }
+
+    @Test
+    @Order(6)
+    void findByReservedStatus(){
+        List<Book> books = bookRepository.findAllByReserved(true);
+        Assertions.assertEquals(1, books.size());
+    }
+    @Test
+    @Order(7)
+    void findByAvailableStatus(){
+        List<Book> books = bookRepository.findAllByAvailable(true);
+        Assertions.assertEquals(2, books.size());
     }
 }
