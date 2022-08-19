@@ -10,12 +10,13 @@ import java.time.LocalDate;
 public class LibraryUserTest {
 
     @Test
-    void createEmptyLibraryUser(){
+    void createEmptyLibraryUser() {
         LibraryUser user = new LibraryUser();
         Assertions.assertNotNull(user);
     }
+
     @Test
-    void createUserWithAllArgsButId(){
+    void createUserWithAllArgsButId() {
         LibraryUser user = new LibraryUser(LocalDate.parse("1990-09-09"), "Anders", "email@.com");
         String expected = "email@.com";
         Assertions.assertEquals(expected, user.getEmail());
@@ -24,46 +25,53 @@ public class LibraryUserTest {
         Assertions.assertEquals(expected, user.getName());
 
     }
+
     @Test
-    void setUserNameWithCorrectParam(){
+    void setUserNameWithCorrectParam() {
         LibraryUser user = new LibraryUser();
         String expected = "Susan";
         user.setName(expected);
         Assertions.assertEquals(expected, user.getName());
     }
+
     @Test
-    void setUserNameWithNullParam(){
+    void setUserNameWithNullParam() {
         LibraryUser user = new LibraryUser();
-        Assertions.assertThrows(IllegalArgumentException.class, ()->{
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
             user.setName(null);
         });
     }
+
     @Test
-    void setUserNameWithEmptyName(){
+    void setUserNameWithEmptyName() {
         LibraryUser user = new LibraryUser();
-        Assertions.assertThrows(IllegalArgumentException.class, ()->{
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
             user.setName("");
         });
     }
+
     @Test
-    void setUserEmailWithNullParam(){
+    void setUserEmailWithNullParam() {
         LibraryUser user = new LibraryUser();
-        Assertions.assertThrows(IllegalArgumentException.class, ()->{
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
             user.setEmail(null);
         });
     }
+
     @Test
-    void setUserEmailWithEmptyEmail(){
+    void setUserEmailWithEmptyEmail() {
         LibraryUser user = new LibraryUser();
-        Assertions.assertThrows(IllegalArgumentException.class, ()->{
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
             user.setEmail("");
         });
     }
+
     @Test
-    void setUserRegdateWithNullParam(){
+    void setUserRegdateWithNullParam() {
         LibraryUser user = new LibraryUser();
-        Assertions.assertThrows(IllegalArgumentException.class, ()->{
-            user.setRegDate(null);;
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            user.setRegDate(null);
+            ;
         });
     }
 }

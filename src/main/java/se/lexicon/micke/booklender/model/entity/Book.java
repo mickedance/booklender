@@ -1,7 +1,6 @@
 package se.lexicon.micke.booklender.model.entity;
 
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -23,13 +22,13 @@ public class Book {
     @Column(nullable = false)
     boolean reserved = false;
     @Column(nullable = false)
-    private int maxLoanDays ;
+    private int maxLoanDays;
     @Column(nullable = false)
     private BigDecimal finePerDay;
     @Column(nullable = false)
     private String description;
 
-    public Book(){
+    public Book() {
         setAvailable(true);
         setMaxLoanDays(20);
         setReserved(false);
@@ -58,7 +57,7 @@ public class Book {
     }
 
     public void setBookId(int bookId) {
-        if(bookId<0) throw new IllegalArgumentException("bookId is not valid");
+        if (bookId < 0) throw new IllegalArgumentException("bookId is not valid");
         this.bookId = bookId;
     }
 
@@ -67,7 +66,7 @@ public class Book {
     }
 
     public void setTitle(String title) {
-        if(title== null || title.equals("")) throw new IllegalArgumentException("title was null or empty");
+        if (title == null || title.equals("")) throw new IllegalArgumentException("title was null or empty");
         this.title = title;
     }
 
@@ -92,7 +91,7 @@ public class Book {
     }
 
     public void setMaxLoanDays(int maxLoanDays) {
-        if(maxLoanDays<0) throw new IllegalArgumentException("maxLoanDats must be 0 or more");
+        if (maxLoanDays < 0) throw new IllegalArgumentException("maxLoanDats must be 0 or more");
         this.maxLoanDays = maxLoanDays;
     }
 
@@ -101,7 +100,8 @@ public class Book {
     }
 
     public void setFinePerDay(BigDecimal finePerDay) {
-        if(finePerDay.compareTo(BigDecimal.ZERO)<=0 ) throw new IllegalArgumentException("finePerDay must be 0 or more");
+        if (finePerDay.compareTo(BigDecimal.ZERO) <= 0)
+            throw new IllegalArgumentException("finePerDay must be 0 or more");
         this.finePerDay = finePerDay;
     }
 
@@ -110,7 +110,8 @@ public class Book {
     }
 
     public void setDescription(String description) {
-        if(description== null || description.equals("")) throw new IllegalArgumentException("description was null or empty");
+        if (description == null || description.equals(""))
+            throw new IllegalArgumentException("description was null or empty");
 
         this.description = description;
     }

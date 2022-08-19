@@ -37,7 +37,7 @@ public class Loan {
     }
 
     public void setId(long id) {
-        if(id<0) throw new IllegalArgumentException("id must be 0 or more");
+        if (id < 0) throw new IllegalArgumentException("id must be 0 or more");
         this.id = id;
     }
 
@@ -46,7 +46,7 @@ public class Loan {
     }
 
     public void setLoanTaker(LibraryUser loanTaker) {
-        if(loanTaker==null) throw new IllegalArgumentException("loanTaker was null");
+        if (loanTaker == null) throw new IllegalArgumentException("loanTaker was null");
         this.loanTaker = loanTaker;
     }
 
@@ -55,8 +55,8 @@ public class Loan {
     }
 
     public void setBook(Book book) {
-        if(book==null) throw new IllegalArgumentException("book was null");
-        if(book.isAvailable()) {
+        if (book == null) throw new IllegalArgumentException("book was null");
+        if (book.isAvailable()) {
             this.book = book;
             book.setAvailable(false);
         }
@@ -67,7 +67,7 @@ public class Loan {
     }
 
     public void setLoanDate(LocalDate loanDate) {
-        if(loanDate==null) throw new IllegalArgumentException("loanDate was null");
+        if (loanDate == null) throw new IllegalArgumentException("loanDate was null");
         this.loanDate = loanDate;
     }
 
@@ -79,12 +79,12 @@ public class Loan {
         this.concluded = concluded;
     }
 
-    public boolean isOverDue(){
+    public boolean isOverDue() {
         LocalDate loanDays = LocalDate.of(loanDate.getYear(), loanDate.getMonth(), loanDate.getDayOfMonth()).plusDays(book.getMaxLoanDays());
-        return loanDays.compareTo(LocalDate.now())>=0 ? false: true;
+        return loanDays.compareTo(LocalDate.now()) >= 0 ? false : true;
     }
 
-    public boolean extendLoanDays(){
+    public boolean extendLoanDays() {
         return !book.isReserved();
     }
 }

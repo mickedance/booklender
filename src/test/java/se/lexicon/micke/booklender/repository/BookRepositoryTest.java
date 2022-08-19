@@ -12,18 +12,21 @@ import java.util.List;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class BookRepositoryTest {
 
-    private  BookRepository bookRepository;
+    private BookRepository bookRepository;
+
     @Autowired
-    public BookRepositoryTest(BookRepository bookRepository){
+    public BookRepositoryTest(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
     }
-    private Book getbook(){
+
+    private Book getbook() {
         return new Book("title of this book", 99, new BigDecimal("12.01"), "about this book here:");
 
     }
+
     @Test
     @Order(1)
-    void saveBook(){
+    void saveBook() {
         Book book = getbook();
         Book savedBook = bookRepository.save(book);
         Assertions.assertEquals(book.getMaxLoanDays(), savedBook.getMaxLoanDays());
@@ -31,18 +34,20 @@ public class BookRepositoryTest {
         Assertions.assertEquals(book.getDescription(), savedBook.getDescription());
         Assertions.assertEquals(book.getFinePerDay(), savedBook.getFinePerDay());
     }
+
     @Test
     @Order(2)
-    void deleteBook(){
+    void deleteBook() {
         Book book = getbook();
         book.setTitle("a new title for this book");
         Book savedBook = bookRepository.save(book);
         bookRepository.delete(savedBook);
         Assertions.assertFalse(bookRepository.findById(savedBook.getBookId()).isPresent());
     }
+
     @Test
     @Order(3)
-    void updateBook(){
+    void updateBook() {
         Book book = getbook();
         book.setTitle("a newer title for this book");
         Book savedBook = bookRepository.save(book);
@@ -55,29 +60,32 @@ public class BookRepositoryTest {
         bookRepository.save(savedBook);
         Assertions.assertEquals(savedBook, bookRepository.findById(savedBook.getBookId()).get());
     }
+
     @Test
     @Order(4)
-    void findById(){
+    void findById() {
         Book book = getbook();
         book.setDescription("som desc goes here");
         Book savedBook = bookRepository.save(book);
         Assertions.assertEquals(savedBook, bookRepository.findById(savedBook.getBookId()).get());
     }
+
     @Test
     @Order(5)
-    void findAll(){
+    void findAll() {
         Assertions.assertEquals(3, bookRepository.findAll().size());
     }
 
     @Test
     @Order(6)
-    void findByReservedStatus(){
+    void findByReservedStatus() {
         List<Book> books = bookRepository.findAllByReserved(true);
         Assertions.assertEquals(1, books.size());
     }
+
     @Test
     @Order(7)
-    void findByAvailableStatus(){
+    void findByAvailableStatus() {
         List<Book> books = bookRepository.findAllByAvailable(true);
         Assertions.assertEquals(2, books.size());
     }

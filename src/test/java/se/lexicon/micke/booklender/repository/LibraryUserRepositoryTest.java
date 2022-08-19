@@ -1,10 +1,8 @@
 package se.lexicon.micke.booklender.repository;
 
-import org.aspectj.weaver.ast.Or;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.EmptyResultDataAccessException;
 import se.lexicon.micke.booklender.model.entity.LibraryUser;
 
 import java.time.LocalDate;
@@ -70,9 +68,10 @@ public class LibraryUserRepositoryTest {
     void findAll() {
         Assertions.assertEquals(3, libraryUserRepository.findAll().size());
     }
+
     @Test
     @Order(6)
-    void findByEmail(){
+    void findByEmail() {
         LibraryUser user = getUser();
         LibraryUser savedUser = libraryUserRepository.save(user);
         LibraryUser result = libraryUserRepository.findByEmail(user.getEmail()).orElse(null);
