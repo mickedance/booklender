@@ -9,6 +9,7 @@ import se.lexicon.micke.booklender.model.entity.Loan;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Random;
 
 @SpringBootTest
@@ -71,5 +72,23 @@ public class LoanRepositoryTest {
         loanRepository.save(saved);
         Assertions.assertTrue(loanRepository.findById(saved.getId()).get().isConcluded());
     }
-
+    @Test
+    @Order(5)
+    void findAllByUserId(){
+        Loan loan = new Loan(getUser() ,getBook(), LocalDate.now(), false );
+        loanRepository.save(loan);
+        List<Loan>  loanList = loanRepository.findAllByLoanTakerId(1);
+        Assertions.assertEquals(1, loanList.size());
+    }
+    @Test
+    @Order(6)
+    void findByConcludedStatus(){
+        Assertions.assertEquals(1, loanRepository.findByConcluded(true).size());
+        Assertions.assertEquals(3, loanRepository.findByConcluded(false).size());
+    }
+    @Test
+    @Order(7)
+    void findByBookId(){
+        Assertions.assertEquals(1, loanRepository.findByBookBookId(1).size());
+    }
 }

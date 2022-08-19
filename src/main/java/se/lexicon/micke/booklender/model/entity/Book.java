@@ -19,7 +19,7 @@ public class Book {
     @Column(nullable = false, updatable = false)
     private String title;
     @Column(nullable = false)
-    boolean available = true;
+    boolean available;
     @Column(nullable = false)
     boolean reserved = false;
     @Column(nullable = false)
@@ -30,14 +30,17 @@ public class Book {
     private String description;
 
     public Book(){
+        setAvailable(true);
         setMaxLoanDays(20);
+        setReserved(false);
     }
 
     public Book(String title, int maxLoanDays, BigDecimal finePerDay, String description) {
-        this.title = title;
-        this.maxLoanDays = maxLoanDays;
-        this.finePerDay = finePerDay;
-        this.description = description;
+        this();
+        setTitle(title);
+        setMaxLoanDays(maxLoanDays);
+        setFinePerDay(finePerDay);
+        setDescription(description);
     }
 
     public Book(String title, boolean available, boolean reserved, int maxLoanDays, BigDecimal finePerDay, String description) {
