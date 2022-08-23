@@ -5,7 +5,10 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @ToString
@@ -86,5 +89,15 @@ public class Loan {
 
     public boolean extendLoanDays() {
         return !book.isReserved();
+    }
+
+    public BigDecimal getFine(){
+        if(!isOverDue())  return new BigDecimal(0);
+        LocalDateTime loanStartDate = loanDate.atStartOfDay();
+        LocalDateTime todayDate = LocalDate.now().atStartOfDay();
+        long daysOverDue = Duration.between( loanStartDate, todayDate ).toDays() - book.getMaxLoanDays();
+        Double overDueDays = new Double(daysOverDue);
+        Double fineForPeriod = new Double(getBook().getFinePerDay().toString()) *overDueDays ;
+        return  new BigDecimal(fineForPeriod );
     }
 }
