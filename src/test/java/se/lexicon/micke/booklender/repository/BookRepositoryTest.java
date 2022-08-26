@@ -89,4 +89,20 @@ public class BookRepositoryTest {
         List<Book> books = bookRepository.findAllByAvailable(true);
         Assertions.assertEquals(2, books.size());
     }
+
+    @Test
+    @Order(8)
+    void findByTitle() {
+        Book book = getbook();
+        book.setTitle("title1234");
+        Book savedBook = bookRepository.save(book);
+        book = getbook();
+        book.setTitle("title1234");
+        savedBook = bookRepository.save(book);
+        book = getbook();
+        book.setTitle("title1234");
+        savedBook = bookRepository.save(book);
+        List<Book> books = bookRepository.findAllByTitle("title1234");
+        Assertions.assertEquals(3, bookRepository.findAllByTitle("title1234").size());
+    }
 }

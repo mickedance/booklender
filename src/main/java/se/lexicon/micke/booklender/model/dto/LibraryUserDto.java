@@ -13,6 +13,13 @@ public class LibraryUserDto {
     private String name;
     private String email;
 
+    public LibraryUserDto(LocalDate regDate, String name, String email) {
+
+        setRegDate(regDate);
+        setName(name);
+        setEmail(email);
+    }
+
     public LibraryUserDto(int id, LocalDate regDate, String name, String email) {
         setId(id);
         setRegDate(regDate);
@@ -25,7 +32,7 @@ public class LibraryUserDto {
     }
 
     public void setId(int id) {
-        if(id<0) throw new IllegalArgumentException("id must be 0 or more");
+        if (id < 0) throw new IllegalArgumentException("id must be 0 or more");
         this.id = id;
     }
 
@@ -34,7 +41,7 @@ public class LibraryUserDto {
     }
 
     public void setRegDate(LocalDate regDate) {
-        if(regDate==null) throw new IllegalArgumentException("regDate was null");
+        if (regDate == null) throw new IllegalArgumentException("regDate was null");
         this.regDate = regDate;
     }
 
@@ -43,7 +50,7 @@ public class LibraryUserDto {
     }
 
     public void setName(String name) {
-        if(name==null || name.equals("")) throw new IllegalArgumentException("name was empty or null");
+        if (name == null || name.equals("")) throw new IllegalArgumentException("name was empty or null");
         this.name = name;
     }
 
@@ -52,7 +59,7 @@ public class LibraryUserDto {
     }
 
     public void setEmail(String email) {
-        if(email==null || email.equals("")) throw new IllegalArgumentException("email was empty or null");
+        if (email == null || email.equals("")) throw new IllegalArgumentException("email was empty or null");
         this.email = email;
     }
 }

@@ -4,9 +4,7 @@ import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
-import java.time.Duration;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -170,11 +168,12 @@ public class LoanTest {
         loan.getBook().setReserved(true);
         Assertions.assertFalse(loan.extendLoanDays());
     }
+
     @Test
     @Order(17)
-    void getFine(){
+    void getFine() {
         Loan loan = getLoan();
-        loan.setLoanDate( LocalDate.now().minusDays(30) );
+        loan.setLoanDate(LocalDate.now().minusDays(30));
         loan.getBook().setMaxLoanDays(10);
         loan.getBook().setFinePerDay(new BigDecimal("10.5"));
         Assertions.assertEquals(new BigDecimal(210), loan.getFine());

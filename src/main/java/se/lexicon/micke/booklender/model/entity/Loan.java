@@ -19,9 +19,9 @@ public class Loan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false, nullable = false, unique = true)
     private long id;
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.REFRESH})
     private LibraryUser loanTaker;
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.REFRESH})
     private Book book;
     @Column(nullable = false, updatable = false)
     private LocalDate loanDate = LocalDate.now();
@@ -91,13 +91,13 @@ public class Loan {
         return !book.isReserved();
     }
 
-    public BigDecimal getFine(){
-        if(!isOverDue())  return new BigDecimal(0);
+    public BigDecimal getFine() {
+        if (!isOverDue()) return new BigDecimal(0);
         LocalDateTime loanStartDate = loanDate.atStartOfDay();
         LocalDateTime todayDate = LocalDate.now().atStartOfDay();
-        long daysOverDue = Duration.between( loanStartDate, todayDate ).toDays() - book.getMaxLoanDays();
+        long daysOverDue = Duration.between(loanStartDate, todayDate).toDays() - book.getMaxLoanDays();
         Double overDueDays = new Double(daysOverDue);
-        Double fineForPeriod = new Double(getBook().getFinePerDay().toString()) *overDueDays ;
-        return  new BigDecimal(fineForPeriod );
+        Double fineForPeriod = new Double(getBook().getFinePerDay().toString()) * overDueDays;
+        return new BigDecimal(fineForPeriod);
     }
 }

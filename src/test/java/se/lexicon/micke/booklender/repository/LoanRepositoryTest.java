@@ -27,16 +27,18 @@ public class LoanRepositoryTest {
         this.bookRepository = bookRepository;
     }
 
-    private Book getBook() {
-        return new Book("book title", 23, new BigDecimal("14.42"), "description of book");
+    private Book getSavedBook() {
+        Book bookToBeSaved = new Book("book title", 23, new BigDecimal("14.42"), "description of book");
+        return bookRepository.save(bookToBeSaved);
     }
 
-    private LibraryUser getUser() {
-        return new LibraryUser(LocalDate.now(), "username goes here so", "email@.com" + new Random().toString());
+    private LibraryUser getSavedUser() {
+        LibraryUser userToBeSaved = new LibraryUser(LocalDate.now(), "username goes here so", "email@.com" + new Random().toString());
+        return libraryUserRepository.save(userToBeSaved);
     }
 
     private Loan getLoan() {
-        return new Loan(getUser(), getBook(), LocalDate.now(), false);
+        return new Loan(getSavedUser(), getSavedBook(), LocalDate.now(), false);
     }
 
     @Test
@@ -57,7 +59,7 @@ public class LoanRepositoryTest {
         Book book = bookRepository.findById(savedLoan.getBook().getBookId()).orElse(null);
         book.setDescription("different description");
         Book updated = bookRepository.save(book);
-        Assertions.assertEquals("different description", loanRepository.findById(savedLoan.getId()).get().getBook().getDescription());
+        Assertions.assertEquals("different description", loanRepository.findById(savedLoan.getId()).getBook().getDescription());
     }
 
     @Test
@@ -66,7 +68,11 @@ public class LoanRepositoryTest {
         Loan loan = getLoan();
         Loan saved = loanRepository.save(loan);
         loanRepository.delete(saved);
-        Assertions.assertFalse(loanRepository.findById(saved.getId()).isPresent());
+
+        Assertions.assertNull(loanRepository.findById(saved.getId()));
+        Loan existingLoan = loanRepository.findAll().stream().findFirst().orElse(null);
+        if (existingLoan != null)
+            Assertions.assertNotNull(loanRepository.findById(existingLoan.getId()));
     }
 
     @Test
@@ -76,13 +82,13 @@ public class LoanRepositoryTest {
         Loan saved = loanRepository.save(loan);
         saved.setConcluded(true);
         loanRepository.save(saved);
-        Assertions.assertTrue(loanRepository.findById(saved.getId()).get().isConcluded());
+        Assertions.assertTrue(loanRepository.findById(saved.getId()).isConcluded());
     }
 
     @Test
     @Order(5)
     void findAllByUserId() {
-        Loan loan = new Loan(getUser(), getBook(), LocalDate.now(), false);
+        Loan loan = new Loan(getSavedUser(), getSavedBook(), LocalDate.now(), false);
         loanRepository.save(loan);
         List<Loan> loanList = loanRepository.findAllByLoanTakerId(1);
         Assertions.assertEquals(1, loanList.size());
