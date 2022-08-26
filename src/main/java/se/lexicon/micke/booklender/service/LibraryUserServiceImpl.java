@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import se.lexicon.micke.booklender.exception.ObjectNotFoundException;
 import se.lexicon.micke.booklender.model.dto.LibraryUserDto;
 import se.lexicon.micke.booklender.model.entity.LibraryUser;
@@ -45,6 +46,7 @@ public class LibraryUserServiceImpl implements LibraryUserService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public LibraryUserDto create(LibraryUserDto libraryUserDto) {
         if (libraryUserDto == null) throw new IllegalArgumentException("libraryUserDto was null");
         LibraryUser userToSave = modelMapper.map(libraryUserDto, LibraryUser.class);
@@ -53,6 +55,7 @@ public class LibraryUserServiceImpl implements LibraryUserService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public LibraryUserDto update(LibraryUserDto libraryUserDto) throws ObjectNotFoundException {
         if (libraryUserDto == null) throw new IllegalArgumentException("libraryUserDto was null");
         if (!libraryUserRepository.existsById(libraryUserDto.getId()))
@@ -63,6 +66,7 @@ public class LibraryUserServiceImpl implements LibraryUserService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public boolean delete(int id) throws ObjectNotFoundException {
         if (id < 0) throw new IllegalArgumentException("id must be 0 or more");
         if (!libraryUserRepository.existsById(id))

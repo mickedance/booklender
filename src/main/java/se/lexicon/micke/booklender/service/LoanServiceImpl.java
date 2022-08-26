@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import se.lexicon.micke.booklender.exception.ObjectNotFoundException;
 import se.lexicon.micke.booklender.model.dto.LoanDto;
 import se.lexicon.micke.booklender.model.entity.Loan;
@@ -66,6 +67,7 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public LoanDto create(LoanDto loanDto) {
         if (loanDto == null) throw new IllegalArgumentException("loanDto was null");
         Loan loan = modelMapper.map(loanDto, Loan.class);
@@ -75,6 +77,7 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public LoanDto update(LoanDto loanDto) throws ObjectNotFoundException {
         if (loanDto == null) throw new IllegalArgumentException("loanDto was null");
         if (!loanRepository.existsById(loanDto.getId()))
@@ -86,6 +89,7 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public boolean deleteById(long id) throws ObjectNotFoundException {
         if (!loanRepository.existsById(id)) throw new ObjectNotFoundException("loan with this id was not found");
         loanRepository.deleteById(id);

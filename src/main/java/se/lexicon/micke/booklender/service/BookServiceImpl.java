@@ -9,6 +9,7 @@ import se.lexicon.micke.booklender.model.dto.BookDto;
 import se.lexicon.micke.booklender.model.entity.Book;
 import se.lexicon.micke.booklender.repository.BookRepository;
 
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,6 +69,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public BookDto create(BookDto bookDto) {
         if (bookDto == null) throw new IllegalArgumentException("bookDto was null");
         Book bookToSave = modelMapper.map(bookDto, Book.class);
@@ -76,6 +78,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public BookDto update(BookDto bookDto) {
         if (bookDto == null) throw new IllegalArgumentException("bookDto was null");
         Book updatedBook = bookRepository.save(modelMapper.map(bookDto, Book.class));
@@ -84,6 +87,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public boolean deleteById(int bookId) throws ObjectNotFoundException {
         if (!bookRepository.existsById(bookId)) throw new ObjectNotFoundException("Object not found");
         bookRepository.deleteById(bookId);

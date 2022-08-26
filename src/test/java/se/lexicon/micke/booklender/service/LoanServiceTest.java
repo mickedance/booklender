@@ -113,6 +113,7 @@ public class LoanServiceTest {
     void findByUserId() {
         LibraryUserDto user = loanService.findAll().stream().findFirst().orElse(null).getLoanTaker();
         Assertions.assertNotNull(user);
+        Assertions.assertThrows(IllegalArgumentException.class,()->loanService.findByUserId(-1));
         LoanDto loan1 = getSavedLoanDto();
         LoanDto loan2 = getSavedLoanDto();
         LoanDto loan3 = getSavedLoanDto();
