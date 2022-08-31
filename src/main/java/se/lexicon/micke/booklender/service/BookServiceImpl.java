@@ -51,8 +51,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookDto findById(int bookId) throws ObjectNotFoundException {
-        if (bookId < 0) throw new IllegalArgumentException("bookId ust be 0 or more");
+    public BookDto findById(Integer bookId) throws ObjectNotFoundException {
+        if (bookId < 0) throw new IllegalArgumentException("bookId must be 0 or more");
         Optional<Book> book = bookRepository.findById(bookId);
         if (!book.isPresent())
             throw new ObjectNotFoundException("book with id was not found");
@@ -72,23 +72,29 @@ public class BookServiceImpl implements BookService {
     @Transactional(rollbackFor = Exception.class)
     public BookDto create(BookDto bookDto) {
         if (bookDto == null) throw new IllegalArgumentException("bookDto was null");
+        if(bookDto.getBookId()!=null) throw new IllegalArgumentException("bookId must be null");
+
         Book bookToSave = modelMapper.map(bookDto, Book.class);
         Book savedBook = bookRepository.save(bookToSave);
         return modelMapper.map(savedBook, BookDto.class);
+
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public BookDto update(BookDto bookDto) {
+    public BookDto update(BookDto bookDto) throws ObjectNotFoundException {
         if (bookDto == null) throw new IllegalArgumentException("bookDto was null");
+        if(bookDto.getBookId()==null) throw new IllegalArgumentException("BookId cannot be null");
+        if(!bookRepository.existsById(bookDto.getBookId()))
+            throw new ObjectNotFoundException("cannot update. This book does not exists.");
         Book updatedBook = bookRepository.save(modelMapper.map(bookDto, Book.class));
-
+        System.out.println("updated book:" + updatedBook);
         return modelMapper.map(updatedBook, BookDto.class);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean deleteById(int bookId) throws ObjectNotFoundException {
+    public boolean deleteById(Integer bookId) throws ObjectNotFoundException {
         if (!bookRepository.existsById(bookId)) throw new ObjectNotFoundException("Object not found");
         bookRepository.deleteById(bookId);
         return true;

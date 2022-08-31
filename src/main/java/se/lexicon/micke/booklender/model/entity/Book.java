@@ -14,7 +14,7 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false, nullable = false, unique = true)
-    int bookId;
+    Integer bookId;
     @Column(nullable = false, updatable = false)
     private String title;
     @Column(nullable = false)
@@ -52,7 +52,7 @@ public class Book {
         setDescription(description);
     }
 
-    public int getBookId() {
+    public Integer getBookId() {
         return bookId;
     }
 

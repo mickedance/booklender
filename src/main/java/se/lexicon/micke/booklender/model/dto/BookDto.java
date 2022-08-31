@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 @ToString
 @EqualsAndHashCode
 public class BookDto {
-    private int bookId;
+    private Integer bookId;
     private String title;
     private boolean available;
     private boolean reserved;
@@ -27,7 +27,7 @@ public class BookDto {
         setDescription(description);
     }
 
-    public BookDto(int bookId, String title, boolean available, boolean reserved, int maxLoanDays, BigDecimal finePerDay, String description) {
+    public BookDto(Integer bookId, String title, boolean available, boolean reserved, int maxLoanDays, BigDecimal finePerDay, String description) {
         setBookId(bookId);
         setTitle(title);
         setAvailable(available);
@@ -37,8 +37,9 @@ public class BookDto {
         setDescription(description);
     }
 
-    public void setBookId(int bookId) {
+    public void setBookId(Integer bookId) {
         if (bookId < 0) throw new IllegalArgumentException("bookId must be 0 or more, was:" + bookId);
+
         this.bookId = bookId;
     }
 
