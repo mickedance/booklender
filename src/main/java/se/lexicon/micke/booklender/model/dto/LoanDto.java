@@ -2,6 +2,7 @@ package se.lexicon.micke.booklender.model.dto;
 
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 @Getter
@@ -10,9 +11,12 @@ import java.time.LocalDate;
 @ToString
 public class LoanDto {
     private long id;
+    @NotBlank()
     private LibraryUserDto loanTaker;
+    @NotBlank()
     private BookDto book;
     private LocalDate loanDate;
+    @NotBlank()
     private boolean concluded;
 
     public LoanDto(LibraryUserDto loanTaker, BookDto book, LocalDate loanDate, boolean concluded) {

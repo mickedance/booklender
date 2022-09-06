@@ -8,7 +8,7 @@ import java.util.List;
 public interface BookRepository extends CrudRepository<Book, Integer> {
     List<Book> findAll();
 
-    List<Book> findAllByTitle(String title);
+    List<Book> findByTitle(String title);
 
     List<Book> findAllByReserved(boolean reserved);
 

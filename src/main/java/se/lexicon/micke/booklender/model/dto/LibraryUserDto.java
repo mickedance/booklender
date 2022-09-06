@@ -1,7 +1,9 @@
 package se.lexicon.micke.booklender.model.dto;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 @NoArgsConstructor
@@ -9,8 +11,12 @@ import java.time.LocalDate;
 @ToString
 public class LibraryUserDto {
     private int id;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @NotBlank()
     private LocalDate regDate;
+    @NotBlank()
     private String name;
+    @NotBlank()
     private String email;
 
     public LibraryUserDto(LocalDate regDate, String name, String email) {

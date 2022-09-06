@@ -102,7 +102,7 @@ public class BookRepositoryTest {
         book = getbook();
         book.setTitle("title1234");
         savedBook = bookRepository.save(book);
-        List<Book> books = bookRepository.findAllByTitle("title1234");
-        Assertions.assertEquals(3, bookRepository.findAllByTitle("title1234").size());
+        List<Book> books = bookRepository.findByTitle("title1234");
+        Assertions.assertEquals(3, bookRepository.findByTitle("title1234").size());
     }
 }

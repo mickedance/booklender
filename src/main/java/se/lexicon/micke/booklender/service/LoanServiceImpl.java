@@ -45,7 +45,7 @@ public class LoanServiceImpl implements LoanService {
     public List<LoanDto> findByUserId(int id) {
 
         if (id < 0) throw new IllegalArgumentException("id of user must be 0 or more");
-        List<Loan> list = loanRepository.findAllByLoanTakerId(id);
+        List<Loan> list = loanRepository.findByLoanTakerId(id);
 
         return modelMapper.map(list, new TypeToken<List<LoanDto>>() {
         }.getType());

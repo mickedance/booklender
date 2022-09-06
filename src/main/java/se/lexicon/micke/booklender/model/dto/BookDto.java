@@ -2,6 +2,8 @@ package se.lexicon.micke.booklender.model.dto;
 
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 
 @Getter
@@ -10,11 +12,15 @@ import java.math.BigDecimal;
 @EqualsAndHashCode
 public class BookDto {
     private Integer bookId;
+    @NotBlank
+    @NonNull
+    @Size(min=2)
     private String title;
     private boolean available;
     private boolean reserved;
     private int maxLoanDays;
     private BigDecimal finePerDay;
+
     private String description;
 
     public BookDto(String title, boolean available, boolean reserved, int maxLoanDays, BigDecimal finePerDay, String description) {
@@ -44,7 +50,7 @@ public class BookDto {
     }
 
     public void setTitle(String title) {
-        if (title == null || title.equals("")) throw new IllegalArgumentException("title was null or empty");
+        if (title == null ) throw new IllegalArgumentException("title was null or empty");
         this.title = title;
     }
 

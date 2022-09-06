@@ -36,7 +36,7 @@ public class BookDtoTest {
     void setTitle() {
         BookDto bookDto = getBookDto();
         Assertions.assertThrows(IllegalArgumentException.class, () -> bookDto.setTitle(null));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> bookDto.setTitle(""));
+        //Assertions.assertThrows(IllegalArgumentException.class, () -> bookDto.setTitle(""));
         bookDto.setTitle("lskdjhf");
         Assertions.assertEquals("lskdjhf", bookDto.getTitle());
     }

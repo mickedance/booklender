@@ -90,7 +90,7 @@ public class LoanRepositoryTest {
     void findAllByUserId() {
         Loan loan = new Loan(getSavedUser(), getSavedBook(), LocalDate.now(), false);
         loanRepository.save(loan);
-        List<Loan> loanList = loanRepository.findAllByLoanTakerId(1);
+        List<Loan> loanList = loanRepository.findByLoanTakerId(1);
         Assertions.assertEquals(1, loanList.size());
     }
 

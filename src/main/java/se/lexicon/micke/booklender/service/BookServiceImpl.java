@@ -44,7 +44,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<BookDto> findByTitle(String title) {
         if (title == null || title.equals("")) throw new IllegalArgumentException("title was null or empty");
-        List<Book> list = bookRepository.findAllByTitle(title);
+        List<Book> list = bookRepository.findByTitle(title);
         return modelMapper.map(list,
                 new TypeToken<List<BookDto>>() {
                 }.getType());
@@ -71,9 +71,9 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public BookDto create(BookDto bookDto) {
+
         if (bookDto == null) throw new IllegalArgumentException("bookDto was null");
         if(bookDto.getBookId()!=null) throw new IllegalArgumentException("bookId must be null");
-
         Book bookToSave = modelMapper.map(bookDto, Book.class);
         Book savedBook = bookRepository.save(bookToSave);
         return modelMapper.map(savedBook, BookDto.class);

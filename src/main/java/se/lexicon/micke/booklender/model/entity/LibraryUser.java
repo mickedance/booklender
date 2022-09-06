@@ -18,7 +18,7 @@ public class LibraryUser {
     private int id;
     @Column(nullable = false, updatable = false)
     private LocalDate regDate;
-    @Column(updatable = false, nullable = false)
+    @Column(nullable = false)
     private String name;
     @Column(updatable = false, nullable = false, unique = true)
     private String email;
